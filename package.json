@@ -6,7 +6,9 @@
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
     "start": "next start",
-    "seed": "node -r dotenv/config ./scripts/seed.js"
+    "seed": "node -r dotenv/config ./scripts/seed.js",
+    "lint": "next lint",
+    "debug": "set NODE_OPTIONS=--inspect && next dev"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -17,6 +19,7 @@
     "bcrypt": "^5.1.1",
     "clsx": "^2.0.0",
     "next": "^14.0.2",
+    "next-auth": "^5.0.0-beta.5",
     "node-sass": "^9.0.0",
     "postcss": "8.4.31",
     "react": "18.2.0",
