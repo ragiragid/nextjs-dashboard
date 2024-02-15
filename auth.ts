@@ -16,7 +16,7 @@ async function getUser(email: string): Promise<User | undefined> {
   }
 }
  
-export const { auth, signIn, signOut } = NextAuth({
+export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
@@ -37,4 +37,19 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    // メモ：この書き方は、next-auth: 5.0.0-beta.5 では型エラーが解決できず、next-auth: 5.0.0-beta.8 では通りました。えええ…
+    async session({ session, token }) {
+      if (session.user != null && token.id != null) {
+        session.user.id = token.id as string; // token.id は型 unknown でエラーが出るので as で型宣言。すぐ下で渡しているのに…
+      }
+      return session
+    },
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+  },
 });
